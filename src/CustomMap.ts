@@ -1,16 +1,39 @@
-import { loadMaps } from '../config';
+import { User } from './User';
+import { Company } from './Company';
 
 export class CustomMap {
-  private googleMap: Promise<google.maps.Map | void>;
+  private googleMap: google.maps.Map;
+
   constructor(mapContainerId: string) {
-    this.googleMap = loadMaps().then(() => {
-      new google.maps.Map(document.getElementById(mapContainerId), {
+    this.googleMap = new google.maps.Map(
+      document.getElementById(mapContainerId),
+      {
         zoom: 1,
         center: {
           lat: 0,
           lng: 0
         }
-      });
+      }
+    );
+  }
+
+  addUserMarker(user: User): void {
+    new google.maps.Marker({
+      map: this.googleMap,
+      position: {
+        lat: user.location.lat,
+        lng: user.location.lng
+      }
     });
+  }
+
+  addCompanyMarker(company: Company): void {
+    new google.maps.Marker({
+      map: this.googleMap,
+      position: {
+        lat: company.location.lat,
+        lng: company.location.lng
+      }
+    })
   }
 }
