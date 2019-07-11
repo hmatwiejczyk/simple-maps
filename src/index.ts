@@ -1,6 +1,15 @@
 import { User } from './User';
 import { Company } from './Company';
+import { loadMaps } from "../config";
 
-const user = new User();
-const company = new Company();
-console.log({ user, company });
+const mapEl = document.getElementById('map');
+
+loadMaps().then(() => {
+  new google.maps.Map(mapEl, {
+    zoom: 1,
+    center: {
+      lat: 0,
+      lng: 0
+    }
+  });
+});
